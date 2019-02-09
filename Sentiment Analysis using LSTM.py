@@ -2,8 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 Created on Fri Feb  1 18:50:30 2019
-
-@author: fractaluser
+@Bhavani Bhasutkar
 """
 import json
 import os
@@ -35,8 +34,8 @@ from keras.models import load_model
 from sklearn.metrics import matthews_corrcoef,classification_report
 
 #%%
-#path_to_jsonfiles_pos= '/home/fractaluser/Desktop/Personal/Study/Hackathon/reviews_hackathon_data_Train_test_problem_statement/train/eng_positive'
-#path_to_jsonfiles_neg= '/home/fractaluser/Desktop/Personal/Study/Hackathon/reviews_hackathon_data_Train_test_problem_statement/train/eng_negative'
+path_to_jsonfiles_pos= '/home/fractaluser/Desktop/Personal/Study/Hackathon/reviews_hackathon_data_Train_test_problem_statement/train/eng_positive'
+path_to_jsonfiles_neg= '/home/fractaluser/Desktop/Personal/Study/Hackathon/reviews_hackathon_data_Train_test_problem_statement/train/eng_negative'
 path_to_jsonfiles_test= '/home/fractaluser/Desktop/Personal/Study/Hackathon/reviews_hackathon_data_Train_test_problem_statement/test/'
 
 #%%
@@ -74,7 +73,7 @@ df= pd.DataFrame(alldicts)
 df['Sentiment']= 0
 df.iloc[0:len(json_files_pos),-1]=1
 
-#%%
+#%% Checking sentiment using Text Blob package Not used in the final code
 df['txtblob_sentiment']= df['text'].apply(lambda x: TextBlob(x).sentiment[0])
 df['txtblob_sentiment']=df['txtblob_sentiment'].apply(lambda x: 0 if x<0 else 1)
 #%%
@@ -113,6 +112,7 @@ max_length = 4
 padded_docs = pad_sequences(encoded_docs, maxlen=max_length, padding='post')
 print(padded_docs)
 
+#Initial LSTM model code with Embedding Layer
 model = Sequential()
 model.add(Embedding(vocab_size, 8, input_length=max_length))
 model.add(Flatten())
